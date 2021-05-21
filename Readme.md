@@ -3,4 +3,4 @@ A major drawback to using PC-ALE for ham radio is that many rigs are not capable
 My current rig is a Xiegu G90, hence some of the variable names.
 
 This project is a work in progress, and this repo may eventually contain instructions for setup and use of an RTL-SDR for this purpose. I think this approach has the potential to lower the 'barrier to entry' into ALE for ham radio, and encourage a lot of ham operators to try ALE as a tool.
-My physical setup is only marginally more conplex than setting up other HF digital modes such as FT8.
+My physical setup is only marginally more complex than setting up other HF digital modes such as FT8.
