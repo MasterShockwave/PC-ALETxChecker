@@ -6,7 +6,7 @@ SendMode Input  ; Recommended for new scripts due to its superior speed and reli
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 SetTitleMatchMode 2
 
-InputBox, G90COM, TXChecker, Enter 90 COM port number:,,,120
+InputBox, G90COM, TXChecker, Enter G90 COM port number:,,,120
 If ErrorLevel = 1
 	ExitApp
 
