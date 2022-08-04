@@ -16,13 +16,16 @@ StatusBarGetText, sbTxt3, 3, MIL-STD 188-141C & MIL-STD 188-110
 
 if instr(sbTxt3,"SOUNDING") or instr(sbTxt3,"LISTEN CHAN") or instr(sbTxt3,"CALLING") or instr(sbTxt3,"ACKING") or instr(sbTxt3,"CLEARING") or instr(sbTxt3,"RESPONDING") or instr(sbTxt3,"HANDSHAKING")
 	{
-	TrayTip, PC-ALE, TX sent to rig, 2
-	; function call
+	; Set up G90 for TX
 	SwitchG90forTX()
+	; Trigger G90 PTT ON
+	RunWait, %comspec% /c rigctl.exe -m 370 -r COM%G90COM% T 1,,Hide
 	loop
 	{
 	StatusBarGetText, sbTxt3, 3, MIL-STD 188-141C & MIL-STD 188-110
 	if not instr(sbTxt3,"SOUNDING") and not instr(sbTxt3,"LISTEN CHAN") and not instr(sbTxt3,"CALLING") and not instr(sbTxt3,"ACKING") and not instr(sbTxt3,"CLEARING") and not instr(sbTxt3,"RESPONDING") and not instr(sbTxt3,"HANDSHAKING")
+		; Trigger G90 PTT OFF
+		RunWait, %comspec% /c rigctl.exe -m 370 -r COM%G90COM% T 0,,Hide
 		break
 	}
 	}
