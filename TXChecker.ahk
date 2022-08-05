@@ -24,8 +24,16 @@ if instr(sbTxt3,"SOUNDING") or instr(sbTxt3,"LISTEN CHAN") or instr(sbTxt3,"CALL
 	{
 	StatusBarGetText, sbTxt3, 3, MIL-STD 188-141C & MIL-STD 188-110
 	if not instr(sbTxt3,"SOUNDING") and not instr(sbTxt3,"LISTEN CHAN") and not instr(sbTxt3,"CALLING") and not instr(sbTxt3,"ACKING") and not instr(sbTxt3,"CLEARING") and not instr(sbTxt3,"RESPONDING") and not instr(sbTxt3,"HANDSHAKING")
+		{
 		; Trigger G90 PTT OFF
 		RunWait, %comspec% /c rigctl.exe -m 370 -r COM%G90COM% T 0,,Hide
+		; Offset the G90 away from the channel frequency to move the DC spike present.
+		commandStr := "rigctl.exe -m 370 -r COM" . G90COM . " f"
+		actualFreq := ComObjCreate("WScript.Shell").Exec(commandStr).StdOut.ReadAll()
+		StringTrimRight, actualFreq, actualFreq, 2
+		offsetFreq := actualFreq - 3000
+		RunWait, %comspec% /c rigctl.exe -m 370 -r COM%G90COM% F %offsetFreq%,,Hide
+		}
 		break
 	}
 	}
@@ -41,6 +49,4 @@ frequency := SubStr(sbTxt2, 4, FoundPos - 4)
 
 RunWait, %comspec% /c rigctl.exe -m 370 -r COM%G90COM% F %frequency%,,Hide
 RunWait, %comspec% /c rigctl.exe -m 309 -r COM%G90COM% M USB 2400,,Hide ; G90 requires Icom IC-706 model for some mode settings.
-
-actualFreq = rigctl -m 370 -r %G90COM% f
 }
