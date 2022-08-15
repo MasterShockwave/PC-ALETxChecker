@@ -1,4 +1,4 @@
-﻿;Rev 0.2
+;Rev 0.2
 
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
@@ -29,7 +29,7 @@ if instr(sbTxt3,"SOUNDING") or instr(sbTxt3,"LISTEN CHAN") or instr(sbTxt3,"CALL
 		RunWait, %comspec% /c rigctl.exe -m 370 -r COM%G90COM% T 0,,Hide
 		; Offset the G90 away from the channel frequency to move the DC spike present.
 		commandStr := "rigctl.exe -m 370 -r COM" . G90COM . " f"
-		actualFreq := ComObjCreate("WScript.Shell").Exec(commandStr).StdOut.ReadAll()
+		actualFreq := ComObjCreate("WScript.Shell").Exec(commandStr).StdOut.ReadAll() ;desirable to make this window completely hidden in future, refer to https://www.autohotkey.com/boards/viewtopic.php?t=4075
 		StringTrimRight, actualFreq, actualFreq, 2
 		offsetFreq := actualFreq - 3000
 		RunWait, %comspec% /c rigctl.exe -m 370 -r COM%G90COM% F %offsetFreq%,,Hide
